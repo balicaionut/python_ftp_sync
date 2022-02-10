@@ -1,6 +1,7 @@
 import os
 import os.path
 from datetime import datetime
+from ftplib import FTP
 
 #fetching the last time tha ftp server was updated
 with open("mtime.txt","r") as file:
@@ -52,4 +53,37 @@ for line in list:
     outF.write(line)
     outF.write("\n")
 outF.close()
+
+#list to store credentials
+ftp_cred = []
+#reading from credentials file and assigning to list
+with open("login_data.txt") as f:
+    lines = f.readlines()
+count = 0
+for line in lines:
+    count += 1
+    ftp_cred.append(line)
+    
+#assigning credentials from list to credential variables    
+server = ftp_cred[0].strip()
+user = ftp_cred[1].strip()
+password = ftp_cred[2].strip()
+
+#login to ftp server and listing content
+ftp = FTP(server)
+ftp.login(user = user, passwd = password)
+ftp.retrlines('LIST') 
+ftp.quit()
+
+# TODO - create logic to write to FTP
+# def placeFile():
+
+    
+#     filename = "mtime.txt"
+#     ftp.storbinary('STOR '+filename, open(filename, 'rb'))
+    
+#     ftp.quit()
+
+# placeFile()
+
 
