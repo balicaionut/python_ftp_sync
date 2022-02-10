@@ -1,10 +1,12 @@
 import os
+import os.path
+from datetime import datetime
 
-with open('mtime.txt',"r") as file:
+with open("mtime.txt","r") as file:
     first_line = float(file.readline())
 print(first_line)
 
-source = 'structura_foldere'
+source = "structura_foldere"
 list = []
 
 for path, subdirs, files in os.walk(source):
@@ -28,3 +30,16 @@ for path, subdirs, files in os.walk(source):
         print(file, status)
 
 print(list)
+
+now = datetime.now()
+current_time = now.strftime("%Y%m%d_%H%M%S")
+print(current_time)
+save_path = os.getcwd()+"\log"
+log_file = (os.path.join(save_path, current_time))+".txt"
+print(log_file)
+outF = open(log_file, "w")
+
+for line in list:
+    outF.write(line)
+    outF.write("\n")
+outF.close()
