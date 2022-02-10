@@ -5,6 +5,7 @@ with open('mtime.txt',"r") as file:
 print(first_line)
 
 source = 'structura_foldere'
+list = []
 
 for path, subdirs, files in os.walk(source):
     for name in subdirs:
@@ -14,6 +15,7 @@ for path, subdirs, files in os.walk(source):
             status = "OK"
         else:
             status = "to be updated"
+            list.append(dir)
         print(dir, status)
     for name in files:
         file = os.path.join(path, name)
@@ -22,4 +24,7 @@ for path, subdirs, files in os.walk(source):
             status = "OK"
         else:
             status = "to be updated"
+            list.append(file)
         print(file, status)
+
+print(list)
